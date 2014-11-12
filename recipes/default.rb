@@ -13,3 +13,6 @@ node.override['iptables-ng']['rules']['filter']['INPUT']['ssh']['rule'] = "--pro
 node.override['iptables-ng']['rules']['filter']['INPUT']['ssh']['ip_version'] = 4
 node.override['iptables-ng']['rules']['filter']['INPUT']['chef_server']['rule'] = "--protocol tcp --dport #{WEB_UI_PORT} --match state --state NEW --jump ACCEPT"
 node.override['iptables-ng']['rules']['filter']['INPUT']['chef_server']['ip_version'] = 4
+unless node['set_fqdn'].nil?
+  node.override['chef-server']['api_fqdn'] = node['set_fqdn']
+end
