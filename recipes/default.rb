@@ -1,7 +1,10 @@
-WEB_UI_PORT = node['config-chef-server']['web-port']
+WEB_UI_PORT = node['chef-server']['configuration']['nginx']['ssl_port']
 SSH_PORT = node['config-chef-server']['ssh-port']
 
-node.override['chef-server']['configuration']['nginx']['ssl_port'] = WEB_UI_PORT
+unless node['set_fqdn'].nil?
+  node.override['chef-server']['api_fqdn'] = node['set_fqdn']
+end
+
 node.override['iptables-ng']['rules']['filter']['INPUT']['default'] = 'DROP [0:0]'
 node.override['iptables-ng']['rules']['filter']['INPUT']['local_response']['rule'] = '-m conntrack --ctstate ESTABLISHED,RELATED --jump ACCEPT'
 node.override['iptables-ng']['rules']['filter']['INPUT']['local_response']['ip_version'] = 4
@@ -13,6 +16,7 @@ node.override['iptables-ng']['rules']['filter']['INPUT']['ssh']['rule'] = "--pro
 node.override['iptables-ng']['rules']['filter']['INPUT']['ssh']['ip_version'] = 4
 node.override['iptables-ng']['rules']['filter']['INPUT']['chef_server']['rule'] = "--protocol tcp --dport #{WEB_UI_PORT} --match state --state NEW --jump ACCEPT"
 node.override['iptables-ng']['rules']['filter']['INPUT']['chef_server']['ip_version'] = 4
-unless node['set_fqdn'].nil?
-  node.override['chef-server']['api_fqdn'] = node['set_fqdn']
-end
+
+include_recipe 'hostname'
+include_recipe 'chef-server'
+include_recipe 'iptables-ng'
