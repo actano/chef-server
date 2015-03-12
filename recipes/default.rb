@@ -1,5 +1,5 @@
 WEB_UI_PORT = node['chef-server']['configuration']['nginx']['ssl_port']
-SSH_PORT = node['config-chef-server']['ssh-port']
+SSH_PORT = 22
 
 unless node['set_fqdn'].nil?
   node.override['chef-server']['api_fqdn'] = node['set_fqdn']
