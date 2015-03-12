@@ -1,0 +1,24 @@
+SITE
+  remote: https://supermarket.getchef.com/api/v1
+  specs:
+    chef-server (3.0.1)
+      chef-server-ingredient (>= 0.0.0)
+    chef-server-ingredient (0.2.0)
+      packagecloud (>= 0.0.0)
+    hostname (0.3.0)
+      hostsfile (>= 0.0.0)
+    hostsfile (2.4.5)
+    iptables-ng (2.2.5)
+    packagecloud (0.0.17)
+
+PATH
+  remote: .
+  specs:
+    actano-chef-server (0.0.1)
+      chef-server (>= 0.0.0)
+      hostname (>= 0.0.0)
+      iptables-ng (>= 0.0.0)
+
+DEPENDENCIES
+  actano-chef-server (>= 0)
+
