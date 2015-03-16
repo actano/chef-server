@@ -18,5 +18,6 @@ node.override['iptables-ng']['rules']['filter']['INPUT']['chef_server']['rule'] 
 node.override['iptables-ng']['rules']['filter']['INPUT']['chef_server']['ip_version'] = 4
 
 include_recipe 'hostname'
+include_recipe 'actano-chef-server::ssl'
 include_recipe 'chef-server'
 include_recipe 'iptables-ng'
